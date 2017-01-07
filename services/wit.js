@@ -130,7 +130,7 @@ if (require.main === module) {
 }
 //Check if URL contains attachment
 var checkURL = function (url){
-	returnurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
+	return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
 
