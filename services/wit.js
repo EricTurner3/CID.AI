@@ -128,6 +128,11 @@ if (require.main === module) {
 	var client = getWit()
 	client.interactive()
 }
+//Check if URL contains attachment
+var checkURL = function (url){
+	returnurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
+
 
 // GET WEATHER FROM API
 var getWeather = function (location) {
