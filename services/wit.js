@@ -20,7 +20,7 @@ var firstEntityValue = function (entities, entity) {
 
 
 var actions = {
-	say (sessionId, context, message, cb) {
+	say(sessionId, context, message, cb) {
 		// Bot testing mode, run cb() and return
 		if (require.main === module) {
 			cb()
@@ -37,9 +37,9 @@ var actions = {
 			FB.newMessage(context._fbid_, message)
 		}
 
-		
+
 		cb()
-		
+
 	},
 
 	merge(sessionId, context, entities, message, cb) {
@@ -63,7 +63,7 @@ var actions = {
 		//Retrieve greetings
 		var greeting = firstEntityValue(entities, 'greeting')
 		if (greeting) {
-			context.hi = 'Hello!' 
+			context.hi = 'Hello!'
 		} else {
 			delete context.hi
 		}
@@ -77,41 +77,40 @@ var actions = {
 
 	// list of functions Wit.ai can execute
 	['fetch-weather'](sessionId, context, cb) {
-		
+
 		if (context.loc) {
 			//getWeather(context.loc)
 			return new Promise(function (resolve, reject) {
-		var url = 'http://api.openweathermap.org/data/2.5/find?q='+ context.loc +'&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
-		request(url, function (error, response, body) {
-		    if (!error && response.statusCode == 200) {
-		    	var jsonData = JSON.parse(body)
-			var condition = jsonData.list[0].weather[0].main
-			var temp = jsonData.list[0].main.temp
-		    	var combined = "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees"
-			var current = combined
-		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees")
-		    	context.forecast = current
-		   }
-		})
-	return resolve(context);
-	})
+				var url = 'http://api.openweathermap.org/data/2.5/find?q=' + context.loc + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
+				request(url, function (error, response, body) {
+					if (!error && response.statusCode == 200) {
+						var jsonData = JSON.parse(body)
+						var condition = jsonData.list[0].weather[0].main
+						var temp = jsonData.list[0].main.temp
+						var combined = "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees"
+						var current = combined
+						console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees")
+						context.forecast = current
+					}
+				})
+				return resolve(cb(context));
+			})
 		}
 
 
-
-		cb(context)
+		
 	},
 
 	['fetch-directions'](sessionId, context, cb) {
-		
+
 		if (context.origin && context.dest) {
 			getDirections(context.origin, context.dest)
-		 		.then(function (directions) {
-		 			context.directions = directions
-		 		})
-		 		.catch(function (err) {
-		 			console.log(err)
-		 		})
+				.then(function (directions) {
+					context.directions = directions
+				})
+				.catch(function (err) {
+					console.log(err)
+				})
 		}
 
 
@@ -136,8 +135,8 @@ if (require.main === module) {
 	client.interactive()
 }
 //Check if URL contains attachment
-var checkURL = function (url){
-	return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+var checkURL = function (url) {
+	return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
 
@@ -164,15 +163,14 @@ var getWeather = function (location) {
 // GET DIRECTIONS FROM API
 var getDirections = function (origin, dest) {
 	return new Promise(function (resolve, reject) {
-		var url = 'https://maps.googleapis.com/maps/api/directions/json?origin='+ origin + '&destination='+ destination + '4&key=AIzaSyB_oDSmms54zH3Ffb8hHv6854VcWCFKr24'
+		var url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + destination + '4&key=AIzaSyB_oDSmms54zH3Ffb8hHv6854VcWCFKr24'
 		request(url, function (error, response, body) {
-		    if (!error && response.statusCode == 200) {
-		    	var jsonData = JSON.parse(body)
-		    	var directions = jsonData.query.routes.legs.steps[0].text
-		      console.log('DIRECTIONS API SAYS....', jsonData.query.routes.legs.steps[0].text)
-		      return directions
-		    }
-			})
+			if (!error && response.statusCode == 200) {
+				var jsonData = JSON.parse(body)
+				var directions = jsonData.query.routes.legs.steps[0].text
+				console.log('DIRECTIONS API SAYS....', jsonData.query.routes.legs.steps[0].text)
+				return directions
+			}
+		})
 	})
 };
-
