@@ -144,9 +144,9 @@ var getWeather = function (location) {
 		    	var combined = "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees"
 			var current = combined
 		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees")
-			return current
 		    }
 		})
+	return resolve(current);
 	})
 }
 // GET DIRECTIONS FROM API
