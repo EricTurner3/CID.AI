@@ -81,13 +81,13 @@ var actions = {
 		if (context.loc) {
 			//getWeather(context.loc)
 			return new Promise(function (resolve, reject) {
-		var url = 'http://api.openweathermap.org/data/2.5/find?q='+ location +'&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
+		var url = 'http://api.openweathermap.org/data/2.5/find?q='+ context.loc +'&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
 		request(url, function (error, response, body) {
 		    if (!error && response.statusCode == 200) {
 		    	var jsonData = JSON.parse(body)
 			var condition = jsonData.list[0].weather[0].main
 			var temp = jsonData.list[0].main.temp
-		    	var combined = "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees"
+		    	var combined = "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees"
 			var current = combined
 		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees")
 		    	context.forecast = current
