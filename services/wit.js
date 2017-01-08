@@ -81,8 +81,8 @@ var actions = {
 		
 		if (context.loc) {
 			getWeather(context.loc)
-		 		.then(function (forecast) {
-		 			context.forecast = forecast
+		 		.then(function (current) {
+		 			context.forecast = current
 		 		})
 		 		.catch(function (err) {
 		 			console.log(err)
@@ -140,14 +140,14 @@ var getWeather = function (location) {
 		request(url, function (error, response, body) {
 		    if (!error && response.statusCode == 200) {
 		    	var jsonData = JSON.parse(body)
-			var condition = jsonData.list[0].weather[0].description
+			var condition = jsonData.list[0].weather[0].main
 			var temp = jsonData.list[0].main.temp
 		    	var combined = "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees"
-			var forecast = combined
+			var current = combined
 		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees")
-			return forecast
+			return current
 		    }
-			})
+		})
 	})
 }
 // GET DIRECTIONS FROM API
