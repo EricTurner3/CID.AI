@@ -79,7 +79,22 @@ var actions = {
 	['fetch-weather'](sessionId, context, cb) {
 		
 		if (context.loc) {
-			getWeather(context.loc)
+			//getWeather(context.loc)
+			return new Promise(function (resolve, reject) {
+		var url = 'http://api.openweathermap.org/data/2.5/find?q='+ location +'&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
+		request(url, function (error, response, body) {
+		    if (!error && response.statusCode == 200) {
+		    	var jsonData = JSON.parse(body)
+			var condition = jsonData.list[0].weather[0].main
+			var temp = jsonData.list[0].main.temp
+		    	var combined = "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees"
+			var current = combined
+		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees")
+		    	context.forecast = current
+		   }
+		})
+	return resolve(context);
+	})
 		}
 
 
@@ -127,6 +142,7 @@ var checkURL = function (url){
 
 
 // GET WEATHER FROM API
+/*
 var getWeather = function (location) {
 	return new Promise(function (resolve, reject) {
 		var url = 'http://api.openweathermap.org/data/2.5/find?q='+ location +'&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
@@ -144,6 +160,7 @@ var getWeather = function (location) {
 	return resolve(context);
 	})
 }
+*/
 // GET DIRECTIONS FROM API
 var getDirections = function (origin, dest) {
 	return new Promise(function (resolve, reject) {

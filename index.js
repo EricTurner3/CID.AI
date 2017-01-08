@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 
 // index page
 app.get('/', function (req, res) {
-  res.send('hello world i am a chat bot')
+  res.send('Jarvis.AI Chatbot Front page')
 })
 
 // for facebook to verify
