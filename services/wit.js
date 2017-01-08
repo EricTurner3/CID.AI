@@ -81,8 +81,8 @@ var actions = {
 		
 		if (context.loc) {
 			getWeather(context.loc)
-		 		.then(function (weatherInfo) {
-					var weather = weatherInfo
+		 		.then(function (currentWeather) {
+					var weather = currentWeather()
 		 			context.forecast = weather[0]
 					context.temp = weather[1]
 		 		})
@@ -149,6 +149,7 @@ var getWeather = function (location) {
 		      
 				return [condition,temp]
 			}
+			return weatherInfo
 		    }
 			})
 	})
