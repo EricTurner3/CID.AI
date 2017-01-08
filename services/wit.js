@@ -86,12 +86,11 @@ var actions = {
 				request(url, function (error, response, body) {
 					if (!error && response.statusCode == 200) {
 						var jsonData = JSON.parse(body)
-						var condition = jsonData.list[0].weather[0].main
-						var temp = jsonData.list[0].main.temp
-						var combined = "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees"
-						var current = combined
-						console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees")
-						context.forecast = current
+						//var condition = jsonData.list[0].weather[0].main
+						//var temp = jsonData.list[0].main.temp
+						var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees"
+						console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees")
+						context.forecast = forecast
 					}
 				})
 				return resolve(cb(context));
