@@ -136,12 +136,12 @@ var checkURL = function (url){
 // GET WEATHER FROM API
 var getWeather = function (location) {
 	return new Promise(function (resolve, reject) {
-		var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22'+ location +'%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys'
+		var url = 'http://api.openweathermap.org/data/2.5/find?q='+ location +'&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
 		request(url, function (error, response, body) {
 		    if (!error && response.statusCode == 200) {
 		    	var jsonData = JSON.parse(body)
-			var condition = jsonData.query.results.channel.item.condition.text
-			var temp = jsonData.query.results.channel.item.condition.temp
+			var condition = jsonData.weather.main
+			var temp = jsonData.main.temp
 		    	var forecast = "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees"
 		      	console.log('WEATHER API SAYS.... ', forecast)
 		      
