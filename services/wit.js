@@ -46,7 +46,6 @@ var actions = {
 		
 		// Reset the weather story
 		delete context.forecast
-		delete loc
 		delete context.loc
 
 		// Retrive the location entity and store it in the context field
