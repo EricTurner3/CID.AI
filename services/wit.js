@@ -80,12 +80,6 @@ var actions = {
 		
 		if (context.loc) {
 			getWeather(context.loc)
-		 		.then(function (current) {
-		 			context.forecast = current
-		 		})
-		 		.catch(function (err) {
-		 			console.log(err)
-		 		})
 		}
 
 
@@ -144,9 +138,10 @@ var getWeather = function (location) {
 		    	var combined = "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees"
 			var current = combined
 		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees")
-		    }
+		    	context.forecast = current
+		   }
 		})
-	return resolve(current);
+	return resolve(context);
 	})
 }
 // GET DIRECTIONS FROM API
