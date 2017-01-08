@@ -81,7 +81,7 @@ var actions = {
 		
 		if (context.loc) {
 			getWeather(context.loc)
-		 		.then(function (forecast) {
+		 		.then(function (weatherInfo()) {
 					var weather = weatherInfo()
 		 			context.forecast = weather[0]
 					context.temp = weather[1]
