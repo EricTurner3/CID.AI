@@ -140,8 +140,8 @@ var getWeather = function (location) {
 		request(url, function (error, response, body) {
 		    if (!error && response.statusCode == 200) {
 		    	var jsonData = JSON.parse(body)
-			var condition = jsonData.weather.main
-			var temp = jsonData.main.temp
+			var condition = jsonData.list.weather.main
+			var temp = jsonData.list.main.temp
 		    	var forecast = "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees"
 		      	console.log('WEATHER API SAYS.... ', forecast)
 		      
