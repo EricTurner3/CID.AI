@@ -89,7 +89,7 @@ var actions = {
 			var temp = jsonData.list[0].main.temp
 		    	var combined = "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees"
 			var current = combined
-		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + location + " with a temperature of " + temp + " degrees")
+		      	console.log('WEATHER API SAYS.... ', "Currently: " + condition + " in " + context.loc + " with a temperature of " + temp + " degrees")
 		    	context.forecast = current
 		   }
 		})
