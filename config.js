@@ -1,8 +1,8 @@
 'use strict';
 
-const wit-access-token = process.env.wit-access-token
+const WIT_TOKEN = process.env.WIT_TOKEN
 if (!WIT_TOKEN) {
-  throw new Error('Missing wit-access-token. Go to https://wit.ai/docs/quickstart to get one.')
+  throw new Error('Missing WIT_TOKEN. Go to https://wit.ai/docs/quickstart to get one.')
 }
 
 
@@ -14,7 +14,7 @@ if (!FB_PAGE_TOKEN) {
 var FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 
 module.exports = {
-  wit-access-token: wit-access-token,
+  WIT_TOKEN: WIT_TOKEN,
   FB_PAGE_TOKEN: FB_PAGE_TOKEN,
   FB_VERIFY_TOKEN: FB_VERIFY_TOKEN,
 }
