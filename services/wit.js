@@ -41,7 +41,7 @@ var actions = {
 		cb()
 
 	},
-
+/*
 	merge(sessionId, context, entities, message, cb) {
 		// Reset the weather story
 		delete context.forecast
@@ -71,6 +71,7 @@ var actions = {
 
 		cb(context)
 	},
+*/
 
 	error(sessionId, context, error) {
 		console.log(error.message)
@@ -78,6 +79,11 @@ var actions = {
 
 	// list of functions Wit.ai can execute
 	['fetch-weather'](sessionId, context, cb) {
+		
+		var loc = firstEntityValue(entities, 'location')
+		if (loc) {
+			context.loc = loc
+		}
 
 		if (context.loc) {
 			//getWeather(context.loc)
