@@ -172,7 +172,7 @@ const actions = {
 
 var getWeather = function (location) {
 	return new Promise(function (resolve, reject) {
-				var url = 'http://api.openweathermap.org/data/2.5/find?q=' + context.loc + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
+				var url = 'http://api.openweathermap.org/data/2.5/find?q=' + location + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
 				request(url, function (error, response, body) {
 					if (!error && response.statusCode == 200) {
 						var jsonData = JSON.parse(body)
