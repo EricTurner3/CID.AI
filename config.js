@@ -13,6 +13,8 @@ if (!FB_PAGE_TOKEN) {
 
 var FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 
+var FB_APP_SECRET = process.env.FB_APP_SECRET;
+
 module.exports = {
   WIT_TOKEN: WIT_TOKEN,
   FB_PAGE_TOKEN: FB_PAGE_TOKEN,
