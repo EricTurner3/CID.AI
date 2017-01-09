@@ -181,7 +181,7 @@ app.use(({method, url}, rsp, next) => {
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 
 // Webhook setup
-app.get('/webhook', (req, res) => {
+app.get('/webhooks', (req, res) => {
   if (req.query['hub.mode'] === 'subscribe' &&
     req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
     res.send(req.query['hub.challenge']);
@@ -191,7 +191,7 @@ app.get('/webhook', (req, res) => {
 });
 
 // Message handler
-app.post('/webhook', (req, res) => {
+app.post('/webhooks', (req, res) => {
   // Parse the Messenger payload
   // See the Webhook reference
   // https://developers.facebook.com/docs/messenger-platform/webhook-reference
