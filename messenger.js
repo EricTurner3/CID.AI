@@ -43,13 +43,17 @@ const FB_PAGE_TOKEN = Config.FB_PAGE_TOKEN;
 if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
 const FB_APP_SECRET = Config.FB_APP_SECRET;
 if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
+const FB_VERIFY_TOKEN = Config.FB_VERIFY_TOKEN
 
+/*
+//Use Crypto to Generate a new verify token each time
 let FB_VERIFY_TOKEN = null;
 crypto.randomBytes(8, (err, buff) => {
   if (err) throw err;
   FB_VERIFY_TOKEN = buff.toString('hex');
   console.log(`/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
 });
+*/
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
