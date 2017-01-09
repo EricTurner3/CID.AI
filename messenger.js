@@ -19,6 +19,8 @@ const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
 
+var Config = require('./config')
+
 let Wit = null;
 let log = null;
 try {
