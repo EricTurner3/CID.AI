@@ -180,7 +180,7 @@ var getWeather = function (location) {
 						//var temp = jsonData.list[0].main.temp
 						var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees"
 						console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees")
-						context.forecast = forecast
+						return forecast
 		   }
 		})
 	})
