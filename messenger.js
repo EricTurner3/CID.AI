@@ -134,7 +134,7 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
-  fetch-weather((context, entities)) {
+  fetchWeather((context, entities)) {
 		delete context.loc
 		var loc = firstEntityValue(entities, 'location')
 		if (loc) {
