@@ -154,7 +154,7 @@ const actions = {
 		}
 
 		if (context.loc) {
-			getDirections(context.loc)
+			getWeather(context.loc)
 				.then(function (forecast) {
 					context.forecast = forecast
 				})
