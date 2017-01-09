@@ -154,8 +154,24 @@ const actions = {
 		}
 
 		if (context.loc) {
-			//getWeather(context.loc)
-			return new Promise(function (resolve, reject) {
+			getDirections(context.loc)
+				.then(function (forecast) {
+					context.forecast = forecast
+				})
+				.catch(function (err) {
+					console.log(err)
+				})
+		}
+
+
+		
+	},
+};
+
+// GET WEATHER FROM API
+
+var getWeather = function (location) {
+	return new Promise(function (resolve, reject) {
 				var url = 'http://api.openweathermap.org/data/2.5/find?q=' + context.loc + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
 				request(url, function (error, response, body) {
 					if (!error && response.statusCode == 200) {
@@ -165,15 +181,11 @@ const actions = {
 						var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees"
 						console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees")
 						context.forecast = forecast
-					}
-				})
-			})
-		}
+		   }
+		})
+	})
+}
 
-
-		
-	},
-};
 
 // Setting up our bot
 const wit = new Wit({
