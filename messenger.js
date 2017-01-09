@@ -154,10 +154,16 @@ const actions = {
 		}
 
 		if (context.loc) {
-			context.forecast  = getWeather(context.loc)
+			getWeather(context.loc)
+				.then(function (forecast) {
+					context.forecast = forecast
+				})
+				.catch(function (err) {
+					console.log(err)
+				})
 		}
 
-	return context;
+	return context.forecast;
 		
 	},
 };
