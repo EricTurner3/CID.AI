@@ -151,9 +151,6 @@ const actions = {
 		var loc = firstEntityValue(entities, 'location')
 		if (loc) {
 			context.loc = loc
-		}
-
-		if (context.loc) {
 			getWeather(context.loc)
 				.then(function (forecast) {
 					context.forecast = forecast
@@ -162,6 +159,8 @@ const actions = {
 					console.log(err)
 				})
 		}
+
+		
 
 	return context;
 		
