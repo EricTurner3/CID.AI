@@ -150,7 +150,16 @@ const actions = {
 	return new Promise(function(resolve, reject) {
 		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
-			context.forecast = getWeather(loc);
+			var url = 'http://api.openweathermap.org/data/2.5/find?q=' + loc + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
+			request(url, function (error, response, body) {
+				f (!error && response.statusCode == 200) {
+					var jsonData = JSON.parse(body);
+					//var condition = jsonData.list[0].weather[0].main
+					//var temp = jsonData.list[0].main.temp
+					var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees";
+					console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in")
+				
+			context.forecast = forecast + " in " + loc + ".";
 		}
 
 		return resolve(context);
@@ -159,7 +168,7 @@ const actions = {
 };
 
 // GET WEATHER FROM API
-
+/*
 var getWeather = function (location) {
 	return new Promise(function (resolve, reject) {
 		var url = 'http://api.openweathermap.org/data/2.5/find?q=' + location + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
@@ -170,12 +179,12 @@ var getWeather = function (location) {
 				//var temp = jsonData.list[0].main.temp
 				var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location;
 				console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location)
-				return forecast;
+				return resolve(forecast);
 			}
 		})
 	})
 }
-
+*/
 
 // Setting up our bot
 const wit = new Wit({
