@@ -146,14 +146,14 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
-  fetchWeather({sessionId, context, entities}) {
+  ['fetchWeather'](sessionId, context, entities) {
 	return new Promise(function(resolve, reject) {
 		var loc = firstEntityValue(entities, 'location');
-		var forecast;
 		if (loc) {
 			getWeather(loc)
 				.then(function (forecast) {
 		 			context.forecast = forecast + " in " + loc + ".";
+					console.log("context.forecast: " + context);
 				})
 				.catch(function (err) {
 					console.log(err)
