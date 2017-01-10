@@ -146,6 +146,14 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
+ ['reset']({sessionId, context, entities}) {
+	return new Promise(function(resolve, reject) {
+		//Reset Weather Story
+			delete context.forecast;
+		//Reset Other stories
+	});
+  }, 
+  
   ['fetchWeather']({sessionId, context, entities}) {
 	return new Promise(function(resolve, reject) {
 		console.log("Using fetchWeather action");
@@ -170,7 +178,7 @@ const actions = {
 			delete context.forecast;
 		}
 	});
-},
+  },
 };
 
 // GET WEATHER FROM API
