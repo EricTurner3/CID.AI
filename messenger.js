@@ -149,7 +149,13 @@ const actions = {
  ['reset']({sessionId, context, entities}) {
 	return new Promise(function(resolve, reject) {
 		//Reset Weather Story
-			delete context.forecast;
+		delete context.forecast;
+			
+		//Retrieve location entity
+		var loc = firstEntityValue(entities, 'location');
+		if (loc) {
+			context.loc = loc
+		}
 		//Reset Other stories
 	});
   }, 
@@ -157,13 +163,13 @@ const actions = {
   ['fetchWeather']({sessionId, context, entities}) {
 	return new Promise(function(resolve, reject) {
 		console.log("Using fetchWeather action");
-		var loc = firstEntityValue(entities, 'location');
-		if (loc) {
+		
+		if (context.loc) {
 			console.log("fetchWeather: location entity FOUND");
-			getWeather(loc)
+			getWeather(context.loc)
 				.then(function (forecast) {
 					console.log("fetchWeather: Setting context.forecast...");
-		 			context.forecast = forecast + " in " + loc + ".";
+		 			context.forecast = forecast + " in " + context.loc + ".";
 					console.log("fetchWeather: context.forecast: " + context);
 					resolve(context);
 				})
