@@ -150,7 +150,7 @@ const actions = {
 	return new Promise(function(resolve, reject) {
 		//Reset Weather Story
 		delete context.forecast;
-			
+		delete context.missingLocation;
 		//Retrieve location entity
 		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
