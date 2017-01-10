@@ -161,6 +161,9 @@ const actions = {
 			context.missingLocation = true;
 		}
 		//Reset Other stories
+		
+		
+		resolve(context);
 	});
   }, 
   
