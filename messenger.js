@@ -154,7 +154,11 @@ const actions = {
 		//Retrieve location entity
 		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
-			context.loc = loc
+			context.loc = loc;
+			context.missingLocation = false;
+		}
+		else{
+			context.missingLocation = true;
 		}
 		//Reset Other stories
 	});
@@ -165,7 +169,7 @@ const actions = {
 		console.log("Using fetchWeather action");
 		
 		if (context.loc) {
-			console.log("fetchWeather: location entity FOUND");
+			
 			getWeather(context.loc)
 				.then(function (forecast) {
 					console.log("fetchWeather: Setting context.forecast...");
@@ -177,11 +181,6 @@ const actions = {
 					console.log("fetchWeather: ERROR with getWeather(loc):");
 					console.log(err)
 				})
-		}
-		else{
-			console.log("fetchWeather: location entity MISSING, prompting user for location...");
-			context.missingLocation = true;
-			delete context.forecast;
 		}
 	});
   },
