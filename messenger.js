@@ -178,7 +178,7 @@ const actions = {
 
 var getWeather = new Promise(
 	function (resolve, reject) {
-		function(location){
+		function (location){
 			console.log("fetchWeather: getWeather(): Accessing API to retrieve weather data...");
 			var url = 'http://api.openweathermap.org/data/2.5/find?q=' + location + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
 			request(url, function (error, response, body) {
