@@ -160,7 +160,7 @@ const actions = {
 					console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in")
 					context.forecast = forecast + " in " + loc + ".";
 				}
-			)};
+			});
 		}
 
 		return resolve(context);
