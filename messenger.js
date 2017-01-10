@@ -148,7 +148,7 @@ const actions = {
   // See https://wit.ai/docs/quickstart
   fetchWeather({context, entities}) {
 		delete context.loc
-		var loc = firstEntityValue(entities, 'location')
+		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
 			context.loc = loc
 			getWeather(context.loc)
@@ -159,8 +159,6 @@ const actions = {
 					console.log(err)
 				})
 		}
-
-		
 
 	return context;
 		
