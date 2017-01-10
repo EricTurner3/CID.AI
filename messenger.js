@@ -160,7 +160,7 @@ const actions = {
 				})
 		}
 
-		return resolve(context);
+		return Promise.resolve(context);
 	});
 },
 };
@@ -177,7 +177,7 @@ var getWeather = function (location) {
 				//var temp = jsonData.list[0].main.temp
 				var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location;
 				console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location)
-				return resolve(forecast);
+				return forecast;
 			}
 		})
 	})
