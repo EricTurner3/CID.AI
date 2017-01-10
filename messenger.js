@@ -148,16 +148,25 @@ const actions = {
   // See https://wit.ai/docs/quickstart
   ['fetchWeather']({sessionId, context, entities}) {
 	return new Promise(function(resolve, reject) {
+		console.log("Using fetchWeather action");
 		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
+			console.log("fetchWeather: location entity FOUND");
 			getWeather(loc)
 				.then(function (forecast) {
+					console.log("fetchWeather: Setting context.forecast...");
 		 			context.forecast = forecast + " in " + loc + ".";
-					console.log("context.forecast: " + context);
+					console.log("fetchWeather: context.forecast: " + context);
 				})
 				.catch(function (err) {
+					console.log("fetchWeather: ERROR with getWeather(loc):");
 					console.log(err)
 				})
+		}
+		else{
+			console.log("fetchWeather: location entity MISSING, prompting user for location...");
+			context.missingLocation = true;
+			delete context.forecast;
 		}
 
 		resolve(context);
@@ -169,14 +178,16 @@ const actions = {
 
 var getWeather = function (location) {
 	return new Promise(function (resolve, reject) {
+		console.log("fetchWeather: Accessing API to retrieve weather data...");
 		var url = 'http://api.openweathermap.org/data/2.5/find?q=' + location + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
 		request(url, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
+				console.log("fetchWeather: API reached, inputting location and waiting for results...");
 				var jsonData = JSON.parse(body);
 				//var condition = jsonData.list[0].weather[0].main
 				//var temp = jsonData.list[0].main.temp
-				var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location;
-				console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location)
+				var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees";
+				console.log('fetchWeather: WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees")
 				resolve(forecast);
 			}
 		})
