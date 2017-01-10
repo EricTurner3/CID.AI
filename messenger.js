@@ -151,7 +151,6 @@ const actions = {
 		delete context.loc
 		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
-			context.loc = loc;
 			getWeather(loc)
 				.then(function (forecast) {
 		 			context.forecast = forecast 
@@ -176,8 +175,8 @@ var getWeather = function (location) {
 				var jsonData = JSON.parse(body);
 				//var condition = jsonData.list[0].weather[0].main
 				//var temp = jsonData.list[0].main.temp
-				var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees";;
-				console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees")
+				var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location;
+				console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees in " + location)
 				return forecast;
 			}
 		})
