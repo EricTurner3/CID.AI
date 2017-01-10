@@ -150,6 +150,8 @@ const actions = {
 	return new Promise(function(resolve, reject) {
 		//Reset Weather Story
 			delete context.forecast;
+			delete context.loc;
+			delete context.missingLocation;
 		//Reset Other stories
 	});
   }, 
