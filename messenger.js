@@ -146,52 +146,38 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
- ['reset']({sessionId, context, entities}) {
-	return new Promise(function(resolve, reject) {
-		//Reset Weather Story
-		delete context.forecast;
-		delete context.missingLocation;
-		//Retrieve location entity
-		var loc = firstEntityValue(entities, 'location');
-		if (loc) {
-			context.loc = loc;
-			context.missingLocation = false;
-		}
-		else{
-			context.missingLocation = true;
-		}
-		//Reset Other stories
-		
-		
-		resolve(context);
-	});
-  }, 
+ 
+  ['fetchWeather'](request) {
+	var context = request.context;
+	var entities = request.entities;
+	var location = firstEntityValue(entities, 'location');
+
+	delete context.forecast;
+	delete context.missingLocation;
+	delete context.location;
   
-  ['fetchWeather']({sessionId, context, entities}) {
-	return new Promise(function(resolve, reject) {
-		console.log("Using fetchWeather action");
-		
-		if (context.loc) {
-			
-			getWeather(context.loc)
-				.then(function (forecast) {
-					console.log("fetchWeather: Setting context.forecast...");
-		 			context.forecast = forecast + " in " + context.loc + ".";
-					console.log("fetchWeather: context.forecast: " + context);
-					resolve(context);
-				})
-				.catch(function (err) {
-					console.log("fetchWeather: ERROR with getWeather(loc):");
-					console.log(err)
-				})
-		}
-	});
+	if (location) {
+		context.location = location;
+		return fetch(
+			'http://api.openweathermap.org/data/2.5/find?q=' + location +
+			'&units=imperial' +
+			'&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
+		)
+    .then(function(response) { return response.json(); })
+    .then(function(responseJSON) { 
+      context.forecast = responseJSON.list[0].weather[0].main + " with a temperature of " + responseJSON.list[0].main.temp + " degrees";;
+      return context;
+    });
+  } else {
+    context.missingLocation = true;
+    return context;
+  }
   },
 };
 
 // GET WEATHER FROM API
 
-
+/*
 var getWeather = function (location) {
 	return new Promise(function (resolve, reject) {
 		console.log("fetchWeather: Accessing API to retrieve weather data...");
@@ -209,7 +195,7 @@ var getWeather = function (location) {
 		})
 	});
 }
-
+*/
 
 // Setting up our bot
 const wit = new Wit({
