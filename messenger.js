@@ -176,23 +176,25 @@ const actions = {
 
 // GET WEATHER FROM API
 
-var getWeather = function (location) {
-	return new Promise(function (resolve, reject) {
-		console.log("fetchWeather: Accessing API to retrieve weather data...");
-		var url = 'http://api.openweathermap.org/data/2.5/find?q=' + location + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
-		request(url, function (error, response, body) {
-			if (!error && response.statusCode == 200) {
-				console.log("fetchWeather: API reached, inputting location and waiting for results...");
-				var jsonData = JSON.parse(body);
-				//var condition = jsonData.list[0].weather[0].main
-				//var temp = jsonData.list[0].main.temp
-				var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees";
-				console.log('fetchWeather: WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees")
-				resolve(forecast);
-			}
-		})
-	})
-}
+var getWeather = new Promise(
+	function (resolve, reject) {
+		function(location){
+			console.log("fetchWeather: getWeather(): Accessing API to retrieve weather data...");
+			var url = 'http://api.openweathermap.org/data/2.5/find?q=' + location + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
+			request(url, function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					console.log("fetchWeather: getWeather(): API reached, inputting location and waiting for results...");
+					var jsonData = JSON.parse(body);
+					//var condition = jsonData.list[0].weather[0].main
+					//var temp = jsonData.list[0].main.temp
+					var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees";
+					console.log('fetchWeather: getWeather(): WEATHER API SAYS.... ', forecast)
+					resolve(forecast);
+				}
+			})
+		}
+	});
+
 
 
 // Setting up our bot
