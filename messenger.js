@@ -150,13 +150,13 @@ const actions = {
 		delete context.loc
 		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
-			context.loc = loc
+			context.loc = loc;
 			getWeather(context.loc)
 				.then(function (forecast) {
-					context.forecast = forecast
+					context.forecast = forecast;
 				})
 				.catch(function (err) {
-					console.log(err)
+					console.log(err);
 				})
 		}
 
@@ -172,12 +172,12 @@ var getWeather = function (location) {
 				var url = 'http://api.openweathermap.org/data/2.5/find?q=' + location + '&units=imperial&appid=94f38a7a1a91948b0e04e86d5d4d2ef3'
 				request(url, function (error, response, body) {
 					if (!error && response.statusCode == 200) {
-						var jsonData = JSON.parse(body)
+						var jsonData = JSON.parse(body);
 						//var condition = jsonData.list[0].weather[0].main
 						//var temp = jsonData.list[0].main.temp
-						var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees"
+						var forecast = jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees";;
 						console.log('WEATHER API SAYS.... ', jsonData.list[0].weather[0].main + " with a temperature of " + jsonData.list[0].main.temp + " degrees")
-						return forecast
+						return forecast;
 		   }
 		})
 	})
