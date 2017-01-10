@@ -148,16 +148,9 @@ const actions = {
   // See https://wit.ai/docs/quickstart
   fetchWeather({context, entities}) {
 	return new Promise(function(resolve, reject) {
-		delete context.loc
 		var loc = firstEntityValue(entities, 'location');
 		if (loc) {
-			getWeather(loc)
-				.then(function (forecast) {
-		 			context.forecast = forecast 
-				})
-		 		.catch(function (err) {
-					console.log(err)
-				})
+			context.forecast = getWeather(loc);
 		}
 
 		return resolve(context);
