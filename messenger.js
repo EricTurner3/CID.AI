@@ -105,13 +105,13 @@ const fbMessage = (id, text) => {
         });
 };
 
-const fbAttachment = (id, attachment) => {
+const fbGenericAttachment = (id, messageData) => {
     const body = JSON.stringify({
         recipient: {
             id
         },
         message: {
-            attachment
+            messageData
         },
     });
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
@@ -241,6 +241,7 @@ const actions = {
 
 //Use Google Maps API to get Coordinates of any location (use for fetching radar map)
 var getCoordinates = function(loc){
+	console.log("getCoordinates: Generating Coordinates from " + loc)
 	return fetch(
                     'https://maps.googleapis.com/maps/api/geocode/json?address=' + loc +
                     '&key='+ GOOGLE_API_KEY
@@ -251,6 +252,7 @@ var getCoordinates = function(loc){
                 .then(function(responseJSON) {
                     var clat = responseJSON.results.geometry.location.lat;
 					var clong = responseJSON.results.geometry.location.lat;
+					console.log("getCoordinates: Coordinates Found! Latitude = " + clat + ", Longitude = " + clong);
 					return[clat,clong];
                 });
 };
@@ -261,7 +263,7 @@ var radarMap = function(loc){
 	var centerlat = coordinates[0];
 	var centerlong = coordinates[1];
 	var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?centerlat="+ centerlat + "&centerlon="+ centerlong +"&radius=50&width=280&height=280&newmaps=1";
-	
+	console.log("radarMap: Map Link Generated: " + mapLink);
 	return mapLink;
 }
 
@@ -280,8 +282,8 @@ function sendWeather(sender,loc,weather) {
 			}
 		}
 	}
-	console.log("sendWeatherBubble: sendWeather(): Sending via fbMessage()...");
-	fbAttachment(sender,messageData);
+	console.log("[fetchWeather]: sendWeather(): Sending via fbGenericAttachment()...");
+	fbGenericAttachment(sender,messageData);
 }
 
 
