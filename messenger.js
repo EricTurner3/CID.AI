@@ -281,8 +281,8 @@ function sendWeather(sender,loc,weather) {
 			}
 		}
 	}
-	console.log("[fetchWeather]: sendWeather(): Sending via fbGenericAttachment()...");
-	sendGenericMessage(sender,messageData);
+	console.log("[fetchWeather]: sendWeather(): Sending via fbAttachmentMessage()...");
+	fbAttachmentMessage(sender,messageData);
 }
 
 
