@@ -280,7 +280,7 @@ function sendWeather(sender,location,weather) {
 				"attachment":{
 					"type":"image",
 					"payload":{
-						"url":'"' + imageLink + '"'
+						"url":'"' + imageLink + '/"'
 					}
 				}
 			}
