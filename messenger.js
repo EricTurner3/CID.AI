@@ -281,6 +281,7 @@ function sendWeather(sender,location,weather) {
 					"type":"image",
 					"payload":{
 						"url":'"' + imageLink + '"'
+					}
 				}
 			}
 			console.log("[fetchWeather]: sendWeather(): Sending via fbAttachmentMessage()...");
