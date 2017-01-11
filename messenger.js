@@ -246,7 +246,7 @@ function sendWeather(sender,location,weather) {
 				"elements": [{
 					"title": 'Weather in ' + location,
 					"image_url": radarMap(location),
-					"subtitle": forecast,
+					"subtitle": weather,
 				}]
 			}
 		}
