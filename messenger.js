@@ -252,7 +252,7 @@ function sendWeather(sender,location,weather) {
 		}
 	}
 	request({
-		url: 'https://graph.facebook.com/v2.6/me/messages',
+		url: 'https://graph.facebook.com/me/messages',
 		qs: {access_token: encodeURIComponent(FB_PAGE_TOKEN)},
 		method: 'POST',
 		json: {
