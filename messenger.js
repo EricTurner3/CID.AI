@@ -278,11 +278,11 @@ function sendWeather(sender,location,weather) {
 			var imageLink = mpLink;
 			var messageData = {
 				"attachment": {
-					"type": 'template',
+					"type": "template",
 					"payload": {
-						"template_type": 'generic',
+						"template_type": "generic",
 						"elements": [{
-							"title": 'Weather in ' + location,
+							"title": "Weather in " + location,
 							"image_url": '"' + imageLink + '"',
 							"subtitle": '"' + weather + '"' ,
 						}]
