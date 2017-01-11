@@ -106,12 +106,7 @@ const fbMessage = (id, text) => {
 };
 
 const fbAttachmentMessage = (id, messageData) => {
-    var body = JSON.stringify({
-        recipient: {
-            id
-        },
-		});
-	body +=	"message: {" + messageData +" },";
+    const body = "recipient: {" + id + "}, message: {" + messageData +" },";
     
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
     return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
@@ -246,22 +241,22 @@ var getCoordinates = function(loc){
                     '&key='+ GOOGLE_API_KEY
                 )
                 .then(function(response) {
+					console.log("getCoordinates: JSON Data Recieved from " + 'https://maps.googleapis.com/maps/api/geocode/json?address=' + loc + '&key='+ GOOGLE_API_KEY);
                     return response.json();
                 })
                 .then(function(responseJSON) {
                     var clat = responseJSON.results.geometry.location.lat;
 					var clong = responseJSON.results.geometry.location.lng;
+					var coordinates = "centerlat="+ clat + "&centerlon="+ clong"
 					console.log("getCoordinates: Coordinates Found! Latitude = " + clat + ", Longitude = " + clong);
-					return[clat,clong];
+					return coordinates;
                 });
 };
 
 //Get radar map image from WeatherUnderground API
 var radarMap = function(loc){
 	var coordinates = getCoordinates(loc);
-	var centerlat = coordinates[0];
-	var centerlong = coordinates[1];
-	var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?centerlat="+ centerlat + "&centerlon="+ centerlong +"&radius=50&width=280&height=280&newmaps=1";
+	var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?"+ coordinates +"&radius=50&width=280&height=280&newmaps=1";
 	console.log("radarMap: Map Link Generated: " + mapLink);
 	return mapLink;
 }
