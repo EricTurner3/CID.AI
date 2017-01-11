@@ -247,9 +247,9 @@ var radarMap = function(loc){
 	var coordinates = getCoordinates(loc);
 	var centerlat = coordinates[0];
 	var centerlong = coordinates[1];
+	var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?centerlat="+ centerlat + "&centerlon="+ centerlong +"&radius=50&width=280&height=280&newmaps=1";
 	
-	
-	return var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?centerlat="+ centerlat + "&centerlon="+ centerlong +"&radius=50&width=280&height=280&newmaps=1";
+	return mapLink;
 }
 
 // Setting up our bot
