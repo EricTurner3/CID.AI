@@ -237,7 +237,7 @@ var radarMap = function(loc){
 	return mapLink;
 }
 
-function sendWeather(sender,context) {
+function sendWeather(sender,request) {
 	var context = request.context;
 	let messageData = {
 		"attachment": {
