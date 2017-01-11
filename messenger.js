@@ -106,7 +106,7 @@ const fbMessage = (id, text) => {
 };
 
 const fbAttachmentMessage = (recipient, messageData) => {
-    const body = "{" + recipient + ",{" + messageData + " },";
+    const body = '{' + recipient + ',{' + messageData + ' },';
     
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
     return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
@@ -269,7 +269,7 @@ function sendWeather(sender,loc,weather) {
 	
 	let recipient = {
 		"recipient": {
-            sender
+           "id": sender
         }
 	}
 	
