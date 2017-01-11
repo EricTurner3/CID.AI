@@ -247,7 +247,7 @@ var getCoordinates = function(loc){
                 .then(function(responseJSON) {
                     var clat = responseJSON.results.geometry.location.lat;
 					var clong = responseJSON.results.geometry.location.lng;
-					var coordinates = "centerlat="+ clat + "&centerlon="+ clong"
+					var coordinates = "centerlat="+ clat + "&centerlon="+ clong;
 					console.log("getCoordinates: Coordinates Found! Latitude = " + clat + ", Longitude = " + clong);
 					return coordinates;
                 });
