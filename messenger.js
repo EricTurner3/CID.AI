@@ -201,6 +201,7 @@ const actions = {
         var context = request.context;
         var entities = request.entities;
 		var sender = request.fbid;
+		console.log("[fetchWeather] var sender = " + sender);
         var location = firstEntityValue(entities, 'location');
 
         delete context.forecast;
@@ -334,6 +335,7 @@ app.post('/webhooks', (req, res) => {
                     // Yay! We got a new message!
                     // We retrieve the Facebook user ID of the sender
                     const sender = event.sender.id;
+					console.log("Facebook Sender ID: " +  sender);
 
                     // We retrieve the user's current session, or create one if it doesn't exist
                     // This is needed for our bot to figure out the conversation history
