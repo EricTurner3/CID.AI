@@ -200,7 +200,7 @@ const actions = {
     ['fetchWeather'](request) {
         var context = request.context;
         var entities = request.entities;
-		var sender = sessions[sessionId].fbid;
+		var sender = request.fbid;
         var location = firstEntityValue(entities, 'location');
 
         delete context.forecast;
