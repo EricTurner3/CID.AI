@@ -105,24 +105,23 @@ const fbMessage = (id, text) => {
         });
 };
 
-const fbAttachmentMessage = (recipient, messageData) => {
-    const body = '{' + recipient + ',{' + messageData + ' }';
-    
-    const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-    return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+function fbAttachmentMessage(sender, messageData) {
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages?access_token=' + encodeURIComponent(FB_PAGE_TOKEN),
+        method: 'POST',
+        json: {
+            recipient: {
+                id: sender
             },
-            body,
-        })
-        .then(rsp => rsp.json())
-        .then(json => {
-            if (json.error && json.error.message) {
-                throw new Error(json.error.message);
-            }
-            return json;
-        });
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    });
 };
 
 
@@ -232,8 +231,7 @@ const actions = {
 
 };
 
-
-//Use Google Maps API to get Coordinates of any location (use for fetching radar map)
+//Use Google Maps API to retrieve lat/long from any location
 var getCoordinates = function(loc){
 	console.log("getCoordinates: Generating Coordinates from " + loc);
 	return fetch(
@@ -242,6 +240,8 @@ var getCoordinates = function(loc){
                 )
                 .then(function(response) {
 					console.log("getCoordinates: JSON Data Recieved from " + 'https://maps.googleapis.com/maps/api/geocode/json?address=' + loc + '&key='+ GOOGLE_API_KEY);
+					
+					console.log("");
                     return response.json();
                 })
                 .then(function(responseJSON) {
@@ -249,39 +249,36 @@ var getCoordinates = function(loc){
 					var clong = responseJSON.results[0].geometry.location.lng;
 					var coordinates = "centerlat="+ clat + "&centerlon="+ clong;
 					console.log("getCoordinates: Coordinates Found! Latitude = " + clat + ", Longitude = " + clong);
+					
 					return coordinates;
                 });
 };
 
-//Get radar map image from WeatherUnderground API
 var radarMap = function(loc){
 	var coordinates = getCoordinates(loc)
 		.then(function(coords){
 			var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?"+ coords +"&radius=50&width=280&height=280&newmaps=1";
-			console.log("radarMap: Map Link Generated: " + mapLink);
-			return mapLink;
+	console.log("radarMap: Map Link Generated: " + mapLink);
+	return mapLink;
 		});
-	
-}
 
-//Send the Facebook Messenger Generic Template featuring the weather radar image to user.
+}
 function sendWeather(sender,loc,weather) {
-	
+
 	let recipient = {
 		"recipient": {
-           "id": "'" + sender + "'"
-        }
+			"id": '"' + sender + '"'
+		}
 	}
-	
-	let messageData = {
+	var messageData = {
 		"attachment": {
 			"type": 'template',
 			"payload": {
 				"template_type": 'generic',
 				"elements": [{
 					"title": 'Weather in ' + loc,
-					"image_url": radarMap(loc),
-					"subtitle": weather,
+					"image_url": '"' + radarMap(loc) + '"',
+					"subtitle": '"' + weather + '"' ,
 				}]
 			}
 		}
