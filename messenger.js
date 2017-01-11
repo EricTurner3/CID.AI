@@ -207,12 +207,10 @@ const actions = {
     },
 	['sendWeatherBubble'](request) {
 		var context = request.context;
-		var entities = request.entities;
-        var location = firstEntityValue(entities, 'location');
 		//var fbid = request.fbid;
 		var sender = request.sender;
 		console.log("sendWeatherBubble: Prepare to send radar image");
-		sendWeather(sender,location,context.forecast);
+		sendWeather(sender,context.location,context.forecast);
 		return context;
 	}
 };
