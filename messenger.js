@@ -205,16 +205,21 @@ const actions = {
             return context;
         }
     },
+	
 	['sendWeatherBubble'](request) {
+		/* TODO: Try and send radar image of the location from fetchWeather
 		var context = request.context;
 		//var fbid = request.fbid;
 		var sender = request.sender;
 		console.log("sendWeatherBubble: Prepare to send radar image");
 		sendWeather(sender,context.location,context.forecast);
 		return context;
+		*/
 	}
 };
 
+
+//Use Google Maps API to get Coordinates of any location (use for fetching radar map)
 var getCoordinates = function(loc){
 	return fetch(
                     'https://maps.googleapis.com/maps/api/geocode/json?address=' + loc +
@@ -230,6 +235,7 @@ var getCoordinates = function(loc){
                 });
 };
 
+//Get radar map image from WeatherUnderground API
 var radarMap = function(loc){
 	var coordinates = getCoordinates(loc);
 	var centerlat = coordinates[0];
@@ -239,6 +245,7 @@ var radarMap = function(loc){
 	return mapLink;
 }
 
+//Send the Facebook Messenger Generic Template featuring the weather radar image to user.
 function sendWeather(sender,loc,weather) {
 	let messageData = {
 		"attachment": {
