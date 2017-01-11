@@ -270,11 +270,7 @@ var radarMap = function(loc){
 }
 function sendWeather(sender,loc,weather) {
 
-	let recipient = {
-		"recipient": {
-			"id": '"' + sender + '"'
-		}
-	}
+
 	var messageData = {
 		"attachment": {
 			"type": 'template',
@@ -289,7 +285,7 @@ function sendWeather(sender,loc,weather) {
 		}
 	}
 	console.log("[fetchWeather]: sendWeather(): Sending via fbAttachmentMessage()...");
-	fbAttachmentMessage(recipient,messageData);
+	fbAttachmentMessage(sender,messageData);
 }
 
 
