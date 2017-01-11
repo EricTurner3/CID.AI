@@ -38,6 +38,10 @@ const PORT = process.env.PORT || 8445;
 // Wit.ai parameters
 const WIT_TOKEN = Config.WIT_TOKEN;
 
+
+//Sender ID of Facebook User
+var FB_SENDER_ID;
+
 // Messenger API parameters
 const FB_PAGE_TOKEN = Config.FB_PAGE_TOKEN;
 if (!FB_PAGE_TOKEN) {
@@ -200,7 +204,7 @@ const actions = {
     ['fetchWeather'](request) {
         var context = request.context;
         var entities = request.entities;
-		var sender = request.sender;
+		var sender = FB_SENDER_ID;
 		console.log("[fetchWeather] var sender = " + sender);
         var location = firstEntityValue(entities, 'location');
 
@@ -335,7 +339,7 @@ app.post('/webhooks', (req, res) => {
                     // Yay! We got a new message!
                     // We retrieve the Facebook user ID of the sender
                     const sender = event.sender.id;
-					console.log("Facebook Sender ID: " +  sender);
+					FB_SENDER_ID = sender;
 
                     // We retrieve the user's current session, or create one if it doesn't exist
                     // This is needed for our bot to figure out the conversation history
