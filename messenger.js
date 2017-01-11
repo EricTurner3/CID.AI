@@ -106,7 +106,7 @@ const fbMessage = (id, text) => {
 };
 
 function sendGenericMessage(sender, messageData) {
-    httpRequest({
+    request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { 
             access_token: encodeURIComponent(FB_PAGE_TOKEN) 
@@ -221,8 +221,8 @@ const actions = {
                     return response.json();
                 })
                 .then(function(responseJSON) {
-                    var forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
-					sendWeather(sender,location,forecast);
+                    context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
+					sendWeather(sender,context.location,context.forecast);
                     return context;
                 });
         } else {
@@ -247,7 +247,7 @@ var getCoordinates = function(loc){
                 })
                 .then(function(responseJSON) {
                     var clat = responseJSON.results.geometry.location.lat;
-					var clong = responseJSON.results.geometry.location.lat;
+					var clong = responseJSON.results.geometry.location.lng;
 					console.log("getCoordinates: Coordinates Found! Latitude = " + clat + ", Longitude = " + clong);
 					return[clat,clong];
                 });
