@@ -106,7 +106,7 @@ const fbMessage = (id, text) => {
 };
 
 const fbAttachmentMessage = (id, messageData) => {
-    const body = JSON.stringify({
+    var body = JSON.stringify({
         recipient: {
             id
         },
