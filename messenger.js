@@ -208,7 +208,7 @@ const actions = {
 	['sendWeatherBubble'](request) {
 		var context = request.context;
 		var fbid = request.fbid;
-		sendWeather(fbid,context);
+		sendWeather(fbid,context.location,context.forecast);
 		return context;
 	}
 };
@@ -237,17 +237,16 @@ var radarMap = function(loc){
 	return mapLink;
 }
 
-function sendWeather(sender,request) {
-	var context = request.context;
+function sendWeather(sender,location,weather) {
 	let messageData = {
 		"attachment": {
 			"type": 'template',
 			"payload": {
 				"template_type": 'generic',
 				"elements": [{
-					"title": 'Weather in ' + context.location,
-					"image_url": radarMap(context.location),
-					"subtitle": context.forecast,
+					"title": 'Weather in ' + location,
+					"image_url": radarMap(location),
+					"subtitle": forecast,
 				}]
 			}
 		}
