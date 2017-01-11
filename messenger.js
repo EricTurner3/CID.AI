@@ -207,6 +207,7 @@ const actions = {
     ['fetchWeather'](request) {
         var context = request.context;
         var entities = request.entities;
+		var sender = request.sender;
         var location = firstEntityValue(entities, 'location');
 
         delete context.forecast;
