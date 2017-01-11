@@ -224,7 +224,8 @@ const actions = {
                 })
                 .then(function(responseJSON) {
                     context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
-					sendWeather(sender,context.location,context.forecast);
+					//Weather bubble with radar image non functional
+					//sendWeather(sender,context.location,context.forecast);
                     return context;
                 });
         } else {
