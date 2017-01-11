@@ -230,7 +230,7 @@ const actions = {
         } else {
             context.missingLocation = true;
             return context;
-        }
+        } 
     },
 	
 
@@ -277,16 +277,10 @@ function sendWeather(sender,location,weather) {
 		.then(function(mpLink){
 			var imageLink = mpLink;
 			var messageData = {
-				"attachment": {
-					"type": "template",
-					"payload": {
-						"template_type": "generic",
-						"elements": [{
-							"title": "Weather in " + location,
-							"image_url": '"' + imageLink + '"',
-							"subtitle": '"' + weather + '"' ,
-						}]
-					}
+				"attachment":{
+					"type":"image",
+					"payload":{
+						"url":'"' + imageLink + '"';
 				}
 			}
 			console.log("[fetchWeather]: sendWeather(): Sending via fbAttachmentMessage()...");
