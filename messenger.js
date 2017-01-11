@@ -208,23 +208,8 @@ const actions = {
 	['sendWeatherBubble'](request) {
 		var context = request.context;
 		var fbid = request.fbid;
-		fbMessage({
-		recipient: {id: fbid}},
-			{message: {
-				attachment: {
-					type: 'template',
-					payload: {
-						template_type: 'generic',
-						elements: [{
-							title: 'Radar for ' + context.location,
-							image_url: radarMap(context.location),
-							"subtitle": context.forecast,
-						}]
-					}
-				}
-			}
-		});
-  return context;
+		sendWeather(fbid);
+		return context;
 	}
 };
 
@@ -251,6 +236,35 @@ var radarMap = function(loc){
 	
 	return mapLink;
 }
+
+function sendWeather(sender) {
+	let messageData = {
+			"attachment": {
+				"type": 'template',
+				"payload": {
+					"template_type": 'generic',
+					"elements": [{
+						"title": 'Weather in ' + context.location,
+						"image_url": WEATHER_IMAGE_URL,
+						"subtitle": context.forecast,
+	}
+	request({
+		url: 'https://graph.facebook.com/v2.6/me/messages',
+		qs: {access_token:token},
+		method: 'POST',
+		json: {
+			recipient: {id:sender},
+			message: messageData,
+		}
+	}, function(error, response, body) {
+		if (error) {
+			console.log('Error sending messages: ', error)
+		} else if (response.body.error) {
+			console.log('Error: ', response.body.error)
+		}
+	})
+}
+
 
 // Setting up our bot
 const wit = new Wit({
