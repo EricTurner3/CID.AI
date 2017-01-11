@@ -207,8 +207,9 @@ const actions = {
     },
 	['sendWeatherBubble'](request) {
 		var context = request.context;
-		var fbid = request.fbid;
-		sendWeather(fbid,context.location,context.forecast);
+		//var fbid = request.fbid;
+		var sender = request.sender;
+		sendWeather(sender,context.location,context.forecast);
 		return context;
 	}
 };
