@@ -224,7 +224,7 @@ const actions = {
                     return response.json();
                 })
                 .then(function(responseJSON) {
-                    forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
+                    var forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
 					sendWeather(sender,location,forecast);
                     return context;
                 });
