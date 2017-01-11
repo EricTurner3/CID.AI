@@ -105,8 +105,8 @@ const fbMessage = (id, text) => {
         });
 };
 
-const fbAttachmentMessage = (id, messageData) => {
-    const body = "recipient: {" + id + "}, message: {" + messageData +" },";
+const fbAttachmentMessage = (recipient, messageData) => {
+    const body = "{" + recipient + ",{" + messageData " },";
     
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
     return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
@@ -245,8 +245,8 @@ var getCoordinates = function(loc){
                     return response.json();
                 })
                 .then(function(responseJSON) {
-                    var clat = responseJSON.results.geometry.location.lat;
-					var clong = responseJSON.results.geometry.location.lng;
+                    var clat = responseJSON.results[0].geometry.location.lat;
+					var clong = responseJSON.results[0].geometry.location.lng;
 					var coordinates = "centerlat="+ clat + "&centerlon="+ clong;
 					console.log("getCoordinates: Coordinates Found! Latitude = " + clat + ", Longitude = " + clong);
 					return coordinates;
@@ -263,6 +263,12 @@ var radarMap = function(loc){
 
 //Send the Facebook Messenger Generic Template featuring the weather radar image to user.
 function sendWeather(sender,loc,weather) {
+	let recipient = {
+		"recipient": {
+            sender
+        }
+	}
+	
 	let messageData = {
 		"attachment": {
 			"type": 'template',
@@ -277,7 +283,7 @@ function sendWeather(sender,loc,weather) {
 		}
 	}
 	console.log("[fetchWeather]: sendWeather(): Sending via fbAttachmentMessage()...");
-	fbAttachmentMessage(sender,messageData);
+	fbAttachmentMessage(recipient,messageData);
 }
 
 
