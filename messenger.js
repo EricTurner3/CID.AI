@@ -200,7 +200,7 @@ const actions = {
     ['fetchWeather'](request) {
         var context = request.context;
         var entities = request.entities;
-		var sender = request.fbid;
+		var sender = request.sender;
 		console.log("[fetchWeather] var sender = " + sender);
         var location = firstEntityValue(entities, 'location');
 
