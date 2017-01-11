@@ -105,27 +105,30 @@ const fbMessage = (id, text) => {
         });
 };
 
-function sendGenericMessage(sender, messageData) {
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { 
-            access_token: encodeURIComponent(FB_PAGE_TOKEN) 
+const fbAttachmentMessage = (id, messageData) => {
+    const body = JSON.stringify({
+        recipient: {
+            id
         },
-        method: 'POST',
-        json: {
-            recipient: {
-                id: sender
+		});
+	body +=	"message: {" + messageData +" },";
+    
+    const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+    return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending message: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        }
-    });
-}
+            body,
+        })
+        .then(rsp => rsp.json())
+        .then(json => {
+            if (json.error && json.error.message) {
+                throw new Error(json.error.message);
+            }
+            return json;
+        });
+};
 
 
 // ----------------------------------------------------------------------------
@@ -237,7 +240,7 @@ const actions = {
 
 //Use Google Maps API to get Coordinates of any location (use for fetching radar map)
 var getCoordinates = function(loc){
-	console.log("getCoordinates: Generating Coordinates from " + loc)
+	console.log("getCoordinates: Generating Coordinates from " + loc);
 	return fetch(
                     'https://maps.googleapis.com/maps/api/geocode/json?address=' + loc +
                     '&key='+ GOOGLE_API_KEY
