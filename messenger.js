@@ -239,14 +239,17 @@ var radarMap = function(loc){
 
 function sendWeather(sender) {
 	let messageData = {
-			"attachment": {
-				"type": 'template',
-				"payload": {
-					"template_type": 'generic',
-					"elements": [{
-						"title": 'Weather in ' + context.location,
-						"image_url": WEATHER_IMAGE_URL,
-						"subtitle": context.forecast,
+		"attachment": {
+			"type": 'template',
+			"payload": {
+				"template_type": 'generic',
+				"elements": [{
+					"title": 'Weather in ' + context.location,
+					"image_url": radarMap(context.location),
+					"subtitle": context.forecast,
+				}]
+			}
+		}
 	}
 	request({
 		url: 'https://graph.facebook.com/v2.6/me/messages',
