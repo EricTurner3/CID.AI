@@ -165,7 +165,7 @@ const actions = {
 		)
     .then(function(response) { return response.json(); })
     .then(function(responseJSON) { 
-      context.forecast = responseJSON.list[0].weather[0].main + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
+      context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
       return context;
     });
   } else {
