@@ -207,9 +207,12 @@ const actions = {
     },
 	['sendWeatherBubble'](request) {
 		var context = request.context;
+		var entities = request.entities;
+        var location = firstEntityValue(entities, 'location');
 		//var fbid = request.fbid;
 		var sender = request.sender;
-		sendWeather(sender,context.location,context.forecast);
+		console.log("sendWeatherBubble: Prepare to send radar image");
+		sendWeather(sender,location,context.forecast);
 		return context;
 	}
 };
@@ -238,21 +241,21 @@ var radarMap = function(loc){
 	return mapLink;
 }
 
-function sendWeather(sender,location,weather) {
+function sendWeather(sender,loc,weather) {
 	let messageData = {
 		"attachment": {
 			"type": 'template',
 			"payload": {
 				"template_type": 'generic',
 				"elements": [{
-					"title": 'Weather in ' + location,
-					"image_url": radarMap(location),
+					"title": 'Weather in ' + loc,
+					"image_url": radarMap(loc),
 					"subtitle": weather,
 				}]
 			}
 		}
 	}
-	
+	console.log("sendWeatherBubble: sendWeather(): Sending via fbMessage()...");
 	fbMessage(sender,messageData);
 }
 
