@@ -208,7 +208,7 @@ const actions = {
 	['sendWeatherBubble'](request) {
 		var context = request.context;
 		var fbid = request.fbid;
-		sendWeather(fbid);
+		sendWeather(fbid,context);
 		return context;
 	}
 };
@@ -237,7 +237,8 @@ var radarMap = function(loc){
 	return mapLink;
 }
 
-function sendWeather(sender) {
+function sendWeather(sender,context) {
+	var context = request.context;
 	let messageData = {
 		"attachment": {
 			"type": 'template',
