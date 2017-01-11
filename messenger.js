@@ -201,6 +201,8 @@ const actions = {
     // You should implement your custom actions here
     // See https://wit.ai/docs/quickstart
 
+	
+	//Use OpenWeatherMap API to retrieve current temperature and weather conditions
     ['fetchWeather'](request) {
         var context = request.context;
         var entities = request.entities;
@@ -233,6 +235,20 @@ const actions = {
             return context;
         } 
     },
+	//Greet the user in the same fashion the bot is greeted.
+	['greet'](request) {
+        var context = request.context;
+        var entities = request.entities;
+		var sender = FB_SENDER_ID;
+		console.log("[fetchWeather] var sender = " + sender);
+        var greeting = firstEntityValue(entities, 'greeting');
+
+        delete context.greeting
+		
+		if(greeting)
+			context.greeting = greeting;
+		return context;
+	},
 	
 
 };
