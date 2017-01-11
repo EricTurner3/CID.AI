@@ -89,7 +89,7 @@ const fbMessage = (id, text) => {
         },
     });
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-    return fetch('https://graph.facebook.com/me/messages?' + qs, {
+    return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -104,6 +104,33 @@ const fbMessage = (id, text) => {
             return json;
         });
 };
+
+const fbAttachment = (id, attachment) => {
+    const body = JSON.stringify({
+        recipient: {
+            id
+        },
+        message: {
+            attachment
+        },
+    });
+    const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+    return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body,
+        })
+        .then(rsp => rsp.json())
+        .then(json => {
+            if (json.error && json.error.message) {
+                throw new Error(json.error.message);
+            }
+            return json;
+        });
+};
+
 
 // ----------------------------------------------------------------------------
 // Wit.ai bot specific code
@@ -192,12 +219,13 @@ const actions = {
                     'http://api.openweathermap.org/data/2.5/find?q=' + location +
                     '&units=imperial' +
                     '&appid='+ OWM_KEY
-                )
+                ) 
                 .then(function(response) {
                     return response.json();
                 })
                 .then(function(responseJSON) {
-                    context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
+                    forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
+					sendWeather(sender,location,forecast);
                     return context;
                 });
         } else {
@@ -206,16 +234,7 @@ const actions = {
         }
     },
 	
-	['sendWeatherBubble'](request) {
-		/* TODO: Try and send radar image of the location from fetchWeather
-		var context = request.context;
-		//var fbid = request.fbid;
-		var sender = request.sender;
-		console.log("sendWeatherBubble: Prepare to send radar image");
-		sendWeather(sender,context.location,context.forecast);
-		return context;
-		*/
-	}
+
 };
 
 
@@ -261,7 +280,7 @@ function sendWeather(sender,loc,weather) {
 		}
 	}
 	console.log("sendWeatherBubble: sendWeather(): Sending via fbMessage()...");
-	fbMessage(sender,messageData);
+	fbAttachment(sender,messageData);
 }
 
 
