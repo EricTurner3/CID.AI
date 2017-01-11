@@ -105,31 +105,27 @@ const fbMessage = (id, text) => {
         });
 };
 
-const fbGenericAttachment = (id, messageData) => {
-    const body = JSON.stringify({
-        recipient: {
-            id
+function sendGenericMessage(sender, messageData) {
+    httpRequest({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { 
+            access_token: encodeURIComponent(FB_PAGE_TOKEN) 
         },
-        message: {
-            messageData
-        },
-    });
-    const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-    return fetch('https://graph.facebook.com/v2.6/me/messages?' + qs, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        method: 'POST',
+        json: {
+            recipient: {
+                id: sender
             },
-            body,
-        })
-        .then(rsp => rsp.json())
-        .then(json => {
-            if (json.error && json.error.message) {
-                throw new Error(json.error.message);
-            }
-            return json;
-        });
-};
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    });
+}
 
 
 // ----------------------------------------------------------------------------
@@ -283,7 +279,7 @@ function sendWeather(sender,loc,weather) {
 		}
 	}
 	console.log("[fetchWeather]: sendWeather(): Sending via fbGenericAttachment()...");
-	fbGenericAttachment(sender,messageData);
+	sendGenericMessage(sender,messageData);
 }
 
 
