@@ -269,7 +269,7 @@ function sendWeather(sender,loc,weather) {
 	
 	let recipient = {
 		"recipient": {
-           "id": "'" + sender "'"
+           "id": "'" + sender + "'"
         }
 	}
 	
