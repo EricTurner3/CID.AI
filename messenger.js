@@ -260,32 +260,38 @@ var getCoordinates = function(loc){
 };
 
 var radarMap = function(loc){
+	return new Promise (function (resolve, reject){
+		
 	var coordinates = getCoordinates(loc)
 		.then(function(coords){
 			var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?"+ coords +"&radius=50&width=280&height=280&newmaps=1";
-	console.log("radarMap: Map Link Generated: " + mapLink);
-	return mapLink;
+			console.log("radarMap: Map Link Generated: " + mapLink);
+			return resolve(mapLink);
 		});
+	});
 
-}
-function sendWeather(sender,loc,weather) {
+};
+function sendWeather(sender,location,weather) {
 
-
-	var messageData = {
-		"attachment": {
-			"type": 'template',
-			"payload": {
-				"template_type": 'generic',
-				"elements": [{
-					"title": 'Weather in ' + loc,
-					"image_url": '"' + radarMap(loc) + '"',
-					"subtitle": '"' + weather + '"' ,
-				}]
+	var rMap = radarMap(location)
+		.then(function(mpLink){
+			var imageLink = mpLink;
+			var messageData = {
+				"attachment": {
+					"type": 'template',
+					"payload": {
+						"template_type": 'generic',
+						"elements": [{
+							"title": 'Weather in ' + location,
+							"image_url": '"' + imageLink + '"',
+							"subtitle": '"' + weather + '"' ,
+						}]
+					}
+				}
 			}
-		}
-	}
-	console.log("[fetchWeather]: sendWeather(): Sending via fbAttachmentMessage()...");
-	fbAttachmentMessage(sender,messageData);
+			console.log("[fetchWeather]: sendWeather(): Sending via fbAttachmentMessage()...");
+			fbAttachmentMessage(sender,messageData);
+		});
 }
 
 
