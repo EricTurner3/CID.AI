@@ -257,11 +257,11 @@ var getCoordinates = function(loc){
 var radarMap = function(loc){
 	var coordinates = getCoordinates(loc)
 		.then(function(coords){
-			return coords;
+			var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?"+ coords +"&radius=50&width=280&height=280&newmaps=1";
+			console.log("radarMap: Map Link Generated: " + mapLink);
+			return mapLink;
 		});
-	var mapLink = "http://api.wunderground.com/api/"+ WU_KEY + "/radar/image.gif?"+ coordinates +"&radius=50&width=280&height=280&newmaps=1";
-	console.log("radarMap: Map Link Generated: " + mapLink);
-	return mapLink;
+	
 }
 
 //Send the Facebook Messenger Generic Template featuring the weather radar image to user.
