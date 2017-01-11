@@ -208,7 +208,7 @@ const actions = {
 	['sendWeatherBubble'](request) {
 		var context = request.context;
 		var fbid = request.fbid;
-		messengerSend({
+		fbMessage({
 			recipient: {id: fbid},
 			message: {
 				attachment: {
