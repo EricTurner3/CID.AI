@@ -209,8 +209,8 @@ const actions = {
 		var context = request.context;
 		var fbid = request.fbid;
 		fbMessage({
-			recipient: {id: fbid},
-			message: {
+		recipient: {id: fbid}},
+			{message: {
 				attachment: {
 					type: 'template',
 					payload: {
