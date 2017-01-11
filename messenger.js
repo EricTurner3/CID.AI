@@ -252,21 +252,8 @@ function sendWeather(sender,location,weather) {
 			}
 		}
 	}
-	request({
-		url: 'https://graph.facebook.com/me/messages',
-		qs: {access_token: encodeURIComponent(FB_PAGE_TOKEN)},
-		method: 'POST',
-		json: {
-			recipient: {id:sender},
-			message: messageData,
-		}
-	}, function(error, response, body) {
-		if (error) {
-			console.log('Error sending messages: ', error)
-		} else if (response.body.error) {
-			console.log('Error: ', response.body.error)
-		}
-	})
+	
+	fbMessage(sender,messageData);
 }
 
 
