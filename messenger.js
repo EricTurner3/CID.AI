@@ -225,7 +225,12 @@ const actions = {
                     return response.json();
                 })
                 .then(function(responseJSON) {
-                    context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
+					if(context.title){
+						context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location + ", good " + context.title;
+					}
+					else{
+						context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
+					}
 					//Weather bubble with radar image non functional
 					//sendWeather(sender,context.location,context.forecast);
                     return context;
@@ -243,8 +248,24 @@ const actions = {
 
         delete context.greeting
 		
-		if(greeting){
+		if(context.title){
+			context.greeting = greeting + ", good " + context.title;
+		}
+		else if(greeting){
 			context.greeting = greeting;
+			return context;
+		}
+	},
+	//For using titles in formality
+	['store-gender'](request) {
+        var context = request.context;
+        var entities = request.entities;
+        var title = firstEntityValue(entities, 'male_or_female');
+
+        delete context.title;
+		
+		if(title){
+			context.title = title;
 			return context;
 		}
 	},
