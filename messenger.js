@@ -225,12 +225,7 @@ const actions = {
                     return response.json();
                 })
                 .then(function(responseJSON) {
-					if(context.title){
-						context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location + ", good " + context.title;
-					}
-					else{
 						context.forecast = responseJSON.list[0].weather[0].description + " with a temperature of " + responseJSON.list[0].main.temp + " degrees in " + location;
-					}
 					//Weather bubble with radar image non functional
 					//sendWeather(sender,context.location,context.forecast);
                     return context;
