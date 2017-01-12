@@ -213,6 +213,7 @@ const actions = {
         delete context.forecast;
         delete context.missingLocation;
         delete context.location;
+		delete context.greeting;
 
         if (location) {
             context.location = location;
@@ -241,7 +242,10 @@ const actions = {
         var entities = request.entities;
         var greeting = firstEntityValue(entities, 'greeting');
 
-        delete context.greeting
+        delete context.forecast;
+        delete context.missingLocation;
+        delete context.location;
+		delete context.greeting;
 		
 		if(context.title){
 			context.greeting = greeting + ", good " + context.title;
